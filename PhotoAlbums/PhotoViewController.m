@@ -9,7 +9,7 @@
 #import "PhotoViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-static const CGFloat kDefaultAnimationDuration = 0.3;
+static const CGFloat kDefaultAnimationDuration = 0.4;
 static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionAllowUserInteraction;
 
 @interface PhotoViewController ()
