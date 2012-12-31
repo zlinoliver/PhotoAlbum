@@ -1,5 +1,5 @@
 //
-//  PAGridView2.h
+//  PAGridView.h
 //  PhotoAlbums
 //
 //  Created by zaker-7 on 12-8-17.
@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "PAGridViewCell.h"
 
-@protocol PAGridView2DataSource;
+@protocol PAGridViewDataSource;
 
-@interface PAGridView2 : UIView <UIScrollViewDelegate, UIGestureRecognizerDelegate>
+@interface PAGridView : UIView <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 {
     int _pageRow;
     int _pageCol;
@@ -20,7 +20,7 @@
     float _contentWidth;
     NSMutableArray* _cellArray;
     BOOL _orientationIsPortrait;
-    id<PAGridView2DataSource>_dataSource;
+    id<PAGridViewDataSource>_dataSource;
     UIScrollView *_scrollView;
     CGSize _gridViewCellSize;
     NSInteger _gridViewCellNumber;
@@ -38,7 +38,7 @@
 @property(nonatomic,readwrite)float padding;
 @property(nonatomic,readwrite)float contentHeight;
 @property(nonatomic,readwrite)float contentWidth;
-@property(nonatomic,assign)id<PAGridView2DataSource>dataSource;
+@property(nonatomic,assign)id<PAGridViewDataSource>dataSource;
 @property(nonatomic,readwrite)CGSize gridViewCellSize;
 @property(nonatomic,readwrite)NSInteger gridViewCellNumber;
 @property(nonatomic,retain)UIScrollView *scrollView;
@@ -57,14 +57,14 @@
 @end
 
 //************PAGridViewDataSource Protocol**************//
-@protocol PAGridView2DataSource <NSObject>
+@protocol PAGridViewDataSource <NSObject>
 
--(NSInteger)numberOfItemsInGridView:(PAGridView2 *)gridView;
--(CGSize)sizeForItemsInGridView:(PAGridView2 *)gridView;
+-(NSInteger)numberOfItemsInGridView:(PAGridView *)gridView;
+-(CGSize)sizeForItemsInGridView:(PAGridView *)gridView;
 -(NSInteger)numberOfPageRow;
 -(NSInteger)numberOfPageColumn;
 -(float)paddingForCell;
--(PAGridViewCell *)PAGridView:(PAGridView2 *)gridView cellForItemAtIndex:(NSInteger)index;
+-(PAGridViewCell *)PAGridView:(PAGridView *)gridView cellForItemAtIndex:(NSInteger)index;
 -(BOOL)updateOrientationState;
 -(void)presentPhotoView:(PAGridViewCell *)cell andPhotoArray:(NSMutableArray *)array;
 

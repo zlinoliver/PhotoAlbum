@@ -1,12 +1,12 @@
 //
-//  PAGridView2.m
+//  PAGridView.m
 //  PhotoAlbums
 //
 //  Created by zaker-7 on 12-8-17.
 //
 //
 
-#import "PAGridView2.h"
+#import "PAGridView.h"
 #import <QuartzCore/QuartzCore.h>
 #define TotalColumnHR 7
 #define TotalColumnVR 5
@@ -14,7 +14,7 @@
 static const CGFloat kDefaultAnimationDuration = 0.3;
 static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionAllowUserInteraction;
 
-@interface PAGridView2()
+@interface PAGridView()
 -(CGRect) makeFrameFromIndex:(int) i;
 -(void) setUpCellViewFrame;
 -(void) layoutSubviews;
@@ -26,7 +26,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 
 @end
 
-@implementation PAGridView2
+@implementation PAGridView
 @synthesize cellArray = _cellArray;
 @synthesize pageRow = _pageRow;
 @synthesize pageCol = _pageCol;

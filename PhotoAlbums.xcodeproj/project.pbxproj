@@ -46,7 +46,7 @@
 		1A85CD3E15D4FE410045CF69 /* image056.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1A85CD2215D4FE410045CF69 /* image056.jpg */; };
 		1A85CD3F15D4FE410045CF69 /* image057.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1A85CD2315D4FE410045CF69 /* image057.jpg */; };
 		1A85CD4015D4FE410045CF69 /* image058.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1A85CD2415D4FE410045CF69 /* image058.jpg */; };
-		1A8BD02E15DDF52A00760901 /* PAGridView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8BD02D15DDF52A00760901 /* PAGridView2.m */; };
+		1A8BD02E15DDF52A00760901 /* PAGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8BD02D15DDF52A00760901 /* PAGridView.m */; };
 		1A904AE615C289AE00942B03 /* ThumbnailPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A904AE515C289AD00942B03 /* ThumbnailPickerView.m */; };
 		1A904B0415C2A3E400942B03 /* image001.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1A904AE815C2A3E400942B03 /* image001.jpg */; };
 		1A904B0515C2A3E400942B03 /* image002.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1A904AE915C2A3E400942B03 /* image002.jpg */; };
@@ -128,8 +128,8 @@
 		1A85CD2215D4FE410045CF69 /* image056.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image056.jpg; sourceTree = "<group>"; };
 		1A85CD2315D4FE410045CF69 /* image057.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image057.jpg; sourceTree = "<group>"; };
 		1A85CD2415D4FE410045CF69 /* image058.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image058.jpg; sourceTree = "<group>"; };
-		1A8BD02C15DDF52A00760901 /* PAGridView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAGridView2.h; sourceTree = "<group>"; };
-		1A8BD02D15DDF52A00760901 /* PAGridView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAGridView2.m; sourceTree = "<group>"; };
+		1A8BD02C15DDF52A00760901 /* PAGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAGridView.h; sourceTree = "<group>"; };
+		1A8BD02D15DDF52A00760901 /* PAGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAGridView.m; sourceTree = "<group>"; };
 		1A904AE415C289AD00942B03 /* ThumbnailPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailPickerView.h; sourceTree = "<group>"; };
 		1A904AE515C289AD00942B03 /* ThumbnailPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailPickerView.m; sourceTree = "<group>"; };
 		1A904AE815C2A3E400942B03 /* image001.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image001.jpg; sourceTree = "<group>"; };
@@ -184,7 +184,6 @@
 		1A7ABE5E15B01790006AF14A = {
 			isa = PBXGroup;
 			children = (
-				1A7D105115B5666200D4CA2F /* QuartzCore.framework */,
 				1A7ABE7315B01790006AF14A /* PhotoAlbums */,
 				1A7ABE6C15B01790006AF14A /* Frameworks */,
 				1A7ABE6A15B01790006AF14A /* Products */,
@@ -202,6 +201,7 @@
 		1A7ABE6C15B01790006AF14A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1A7D105115B5666200D4CA2F /* QuartzCore.framework */,
 				1A7ABE6D15B01790006AF14A /* UIKit.framework */,
 				1A7ABE6F15B01790006AF14A /* Foundation.framework */,
 				1A7ABE7115B01790006AF14A /* CoreGraphics.framework */,
@@ -309,8 +309,8 @@
 				1A72FB5D15B7A087006CAC2F /* PAGridViewCell.h */,
 				1A72FB5E15B7A087006CAC2F /* PAGridViewCell.m */,
 				1A904AE415C289AD00942B03 /* ThumbnailPickerView.h */,
-				1A8BD02C15DDF52A00760901 /* PAGridView2.h */,
-				1A8BD02D15DDF52A00760901 /* PAGridView2.m */,
+				1A8BD02C15DDF52A00760901 /* PAGridView.h */,
+				1A8BD02D15DDF52A00760901 /* PAGridView.m */,
 				1A904AE515C289AD00942B03 /* ThumbnailPickerView.m */,
 			);
 			name = API;
@@ -452,7 +452,7 @@
 				1A3868C715C00A2E004D9337 /* PhotoViewController.m in Sources */,
 				1A904AE615C289AE00942B03 /* ThumbnailPickerView.m in Sources */,
 				1ABDBA7F15C7EE5E00C34E5B /* SWSnapshotStackView.m in Sources */,
-				1A8BD02E15DDF52A00760901 /* PAGridView2.m in Sources */,
+				1A8BD02E15DDF52A00760901 /* PAGridView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PAGridView2.h"
+#import "PAGridView.h"
 #import "PhotoViewController.h"
 
-@interface RootViewController : UIViewController<PAGridView2DataSource, UIGestureRecognizerDelegate,PhotoViewDelegate>
+@interface RootViewController : UIViewController<PAGridViewDataSource, UIGestureRecognizerDelegate,PhotoViewDelegate>
 {
     
-    PAGridView2 *_paGridView2;
+    PAGridView *_paGridView;
     BOOL _orientationIsPortrait;
     NSMutableArray *_imageArray;
     UIPanGestureRecognizer *_panGesture;
@@ -26,7 +26,7 @@
     float _lastScale;
 }
 
-@property (nonatomic,retain)PAGridView2 *paGridView2;
+@property (nonatomic,retain)PAGridView *paGridView;
 @property (nonatomic,readwrite)BOOL orientationIsPortrait;
 @property (nonatomic,retain)NSMutableArray *imageArray;
 @property (nonatomic,retain)UIPanGestureRecognizer *panGesture;
