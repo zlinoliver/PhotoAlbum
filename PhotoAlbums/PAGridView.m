@@ -16,13 +16,13 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 
 @interface PAGridView()
 -(CGRect) makeFrameFromIndex:(int) i;
--(void) setUpCellViewFrame;
--(void) layoutSubviews;
--(void) setFrame:(CGRect)f;
+- (void) setUpCellViewFrame;
+- (void) layoutSubviews;
+- (void) setFrame:(CGRect)f;
 -(NSInteger)getCurrentRowWithTagNum:(NSInteger)num;
 -(NSInteger)getCurrentColumnWithTagNum:(NSInteger)num;
 - (void)receivedMemoryWarningNotification:(NSNotification *)notification;
--(void)setUpSingleCellViewFrame;
+- (void)setUpSingleCellViewFrame;
 
 @end
 
@@ -46,7 +46,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 @synthesize ifSnapShotMode = _ifSnapShotMode;
 
 #pragma mark - ======================Dealloc===============================
--(void) dealloc{
+- (void) dealloc{
     
     if (_cellArray) {
         [_cellArray release];
@@ -59,7 +59,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
-
+    
     [super dealloc];
 }
 
@@ -67,21 +67,20 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 
 - (void)initializeScrollView
 {
-    _scrollView = [[UIScrollView alloc]initWithFrame:self.bounds];
-    [_scrollView setBackgroundColor:[UIColor clearColor]];
-    _scrollView.contentSize = CGSizeMake(self.bounds.size.width, self.bounds.size.height);
-    _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    _scrollView.showsVerticalScrollIndicator = NO;
-    _scrollView.showsHorizontalScrollIndicator = NO;
-    _scrollView.scrollEnabled = YES;
-    _scrollView.clipsToBounds = NO;
-    _scrollView.delegate = self;
-    [_scrollView setCanCancelContentTouches:YES];
-    [self addSubview:_scrollView];
-    [_scrollView release];
+    self.scrollView = [[[UIScrollView alloc]initWithFrame:self.bounds] autorelease];
+    [self.scrollView setBackgroundColor:[UIColor clearColor]];
+    self.scrollView.contentSize = CGSizeMake(self.bounds.size.width, self.bounds.size.height);
+    self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.scrollView.showsVerticalScrollIndicator = NO;
+    self.scrollView.showsHorizontalScrollIndicator = NO;
+    self.scrollView.scrollEnabled = YES;
+    self.scrollView.clipsToBounds = NO;
+    self.scrollView.delegate = self;
+    [self.scrollView setCanCancelContentTouches:YES];
+    [self addSubview:self.scrollView];
 }
 
--(void)initializeData
+- (void)initializeData
 {
     //**********初始化数据***********//
     self.lastScale = 1.0;
@@ -101,7 +100,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 }
 
 //*******************为PAGridViewCell添加旋转，捏合，移动和点击的手势识别****************//
--(void)addGestureRecognizersWithCell:(PAGridViewCell *)cell
+- (void)addGestureRecognizersWithCell:(PAGridViewCell *)cell
 {
     
     //*************添加UIRotateGestreRecognizer*******************//
@@ -133,52 +132,52 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 }
 
 //************************调用Delegate方法，刷新数据******************************//
--(void)reloadData
+- (void)reloadData
 {
     
-    if ([_dataSource respondsToSelector:@selector(updateOrientationState)]) {
+    if ([self.dataSource respondsToSelector:@selector(updateOrientationState)]) {
         
-        self.orientationIsPortrait = [_dataSource updateOrientationState];
+        self.orientationIsPortrait = [self.dataSource updateOrientationState];
         
         //********************更新ContentView数据********************//
         [self setNeedsLayout];
     }
     
-    if ([_dataSource respondsToSelector:@selector(numberOfItemsInGridView:)]) {
+    if ([self.dataSource respondsToSelector:@selector(numberOfItemsInGridView:)]) {
         
-        self.gridViewCellNumber = [_dataSource numberOfItemsInGridView:self];
+        self.gridViewCellNumber = [self.dataSource numberOfItemsInGridView:self];
     }
     
-    if ([_dataSource respondsToSelector:@selector(sizeForItemsInGridView:)]) {
+    if ([self.dataSource respondsToSelector:@selector(sizeForItemsInGridView:)]) {
         
-        self.gridViewCellSize = [_dataSource sizeForItemsInGridView:self];
+        self.gridViewCellSize = [self.dataSource sizeForItemsInGridView:self];
     }
     
-    if ([_dataSource respondsToSelector:@selector(numberOfPageRow)]) {
+    if ([self.dataSource respondsToSelector:@selector(numberOfPageRow)]) {
         
-        self.pageRow = [_dataSource numberOfPageRow];
+        self.pageRow = [self.dataSource numberOfPageRow];
     }
     
-    if ([_dataSource respondsToSelector:@selector(numberOfPageColumn)]) {
+    if ([self.dataSource respondsToSelector:@selector(numberOfPageColumn)]) {
         
-        self.pageCol = [_dataSource numberOfPageColumn];
+        self.pageCol = [self.dataSource numberOfPageColumn];
     }
     
-    if ([_dataSource respondsToSelector:@selector(paddingForCell)]) {
+    if ([self.dataSource respondsToSelector:@selector(paddingForCell)]) {
         
-        self.padding = [_dataSource paddingForCell];
+        self.padding = [self.dataSource paddingForCell];
         
-        CGSize size = [self setScrollViewContentSizeWithWidth:_gridViewCellSize.width andHeight:(_gridViewCellSize.height + _padding)];
-        [_scrollView setContentSize:size];
-
+        CGSize size = [self setScrollViewContentSizeWithWidth:self.gridViewCellSize.width andHeight:(self.gridViewCellSize.height + self.padding)];
+        [self.scrollView setContentSize:size];
+        
     }
     
-    if ([_dataSource respondsToSelector:@selector(PAGridView:cellForItemAtIndex:)]) {
+    if ([self.dataSource respondsToSelector:@selector(PAGridView:cellForItemAtIndex:)]) {
         
         //**********清空CellArray的数据，移除scrollView的sunbViews**************//
         [self.cellArray removeAllObjects];
         
-        for (PAGridViewCell *cell in [_scrollView subviews]) {
+        for (PAGridViewCell *cell in [self.scrollView subviews]) {
             
             [cell removeFromSuperview];
         }
@@ -188,7 +187,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         int currentRow, currentColumn;
         for (int i = 0; i < self.gridViewCellNumber; i++) {
             
-            PAGridViewCell *cell = [_dataSource PAGridView:self cellForItemAtIndex:i];
+            PAGridViewCell *cell = [self.dataSource PAGridView:self cellForItemAtIndex:i];
             tFrame=[self makeFrameFromIndex:i + 1];
             [cell setFrame:tFrame];
             currentRow = [self getCurrentRowWithTagNum:cell.tag + 1];
@@ -202,7 +201,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             //**************添加cell到cellArray数组中*****************//
             [self.cellArray addObject:cell];
             [cell setUserInteractionEnabled:YES];
-            [_scrollView addSubview:cell];
+            [self.scrollView addSubview:cell];
             
             //*****************根据设备转向更新Cell的Frame****************************//
             if (self.orientationIsPortrait) {
@@ -223,43 +222,43 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     CGRect reRect=CGRectZero;
     
     reRect.size = CGSizeMake(self.gridViewCellSize.width, self.gridViewCellSize.height);
-
-    CGSize bSize = _scrollView.contentSize;
+    
+    CGSize bSize = self.scrollView.contentSize;
     
     CGPoint centerPoint = CGPointZero;
     
-    float t_width = bSize.width/_pageCol;
-    float t_height = bSize.height/_pageRow;
+    float t_width = bSize.width/self.pageCol;
+    float t_height = bSize.height/self.pageRow;
     
     int t_col, t_row;
     
     //***********Get Column***********//
-    if (i % _pageCol == 0) {
+    if (i % self.pageCol == 0) {
         
-        t_col = _pageCol;
+        t_col = self.pageCol;
         
     }else {
         
-        t_col = i % _pageCol;
+        t_col = i % self.pageCol;
     }
     
     //***********Get Row***************//
-    if (i % _pageCol == 0) {
+    if (i % self.pageCol == 0) {
         
-        t_row = i/_pageCol;
+        t_row = i/self.pageCol;
         
     }else
     {
-        t_row = i/_pageCol +1;
+        t_row = i/self.pageCol +1;
     }
-
+    
     centerPoint.x = t_width * t_col - (t_width/2);
     centerPoint.y = t_height * t_row - (t_height/2);
-            
+    
     reRect.origin.x = centerPoint.x - t_width/2;
     reRect.origin.y = centerPoint.y - t_height/2;
-        
-    reRect = CGRectInset(reRect, _padding, _padding);
+    
+    reRect = CGRectInset(reRect, self.padding, self.padding);
     
     return reRect;
 }
@@ -269,15 +268,15 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 {
     int t_row;
     
-    if (num%_pageCol == 0) {
+    if (num%self.pageCol == 0) {
         
-        t_row = num/_pageCol;
+        t_row = num/self.pageCol;
         
     }else
     {
-        t_row = num/_pageCol +1;
+        t_row = num/self.pageCol +1;
     }
-        
+    
     return t_row;
 }
 
@@ -285,65 +284,65 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 {
     int t_col;
     
-    if (num % _pageCol == 0) {
+    if (num % self.pageCol == 0) {
         
-        t_col = _pageCol;
+        t_col = self.pageCol;
         
     }else {
         
-        t_col = num % _pageCol;
+        t_col = num % self.pageCol;
     }
     
     return t_col;
 }
 
--(void)setUpCellViewFrame{
-        
+- (void)setUpCellViewFrame{
+    
     PAGridViewCell* tCell;
     CGRect reRect;
-    for (int i = 0,len = [_cellArray count]; i<len; i++) {
+    for (int i = 0,len = [self.cellArray count]; i<len; i++) {
         
-        tCell = [_cellArray objectAtIndex:i];
+        tCell = [self.cellArray objectAtIndex:i];
         reRect = [self makeFrameFromIndex:i+1];
         tCell.frame = reRect;
     }
 }
 
--(void)setUpSingleCellViewFrame {
+- (void)setUpSingleCellViewFrame {
     
     PAGridViewCell* tCell;
-    for (int i = 0,len = [_cellArray count]; i<len; i++) {
+    for (int i = 0,len = [self.cellArray count]; i<len; i++) {
         
-        tCell = [_cellArray objectAtIndex:i];
-        tCell.frame = CGRectMake(0, 0, _gridViewCellSize.width, _gridViewCellSize.height);
+        tCell = [self.cellArray objectAtIndex:i];
+        tCell.frame = CGRectMake(0, 0, self.gridViewCellSize.width, self.gridViewCellSize.height);
     }
 }
 
 -(CGSize)setScrollViewContentSizeWithWidth:(float)width andHeight:(float)height
 {
-    float sizeWidth = _pageCol * width;
-    float sizeHeight = _pageRow * height;
-
+    float sizeWidth = self.pageCol * width;
+    float sizeHeight = self.pageRow * height;
+    
     return CGSizeMake(sizeWidth, sizeHeight);
 }
 
--(void) layoutSubviews{
+- (void) layoutSubviews{
     
-    if (_ifSnapShotMode) {
+    if (self.ifSnapShotMode) {
         
         [self setUpSingleCellViewFrame];
-        [_scrollView setFrame:CGRectMake(_scrollView.frame.origin.x, _scrollView.frame.origin.y, _gridViewCellSize.width, _gridViewCellSize.height)];
+        [self.scrollView setFrame:CGRectMake(self.scrollView.frame.origin.x, self.scrollView.frame.origin.y, self.gridViewCellSize.width, self.gridViewCellSize.height)];
         
     }else
     {
         [self setUpCellViewFrame];
-        [_scrollView setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        [self.scrollView setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         
     }
     
 }
 
--(void) setFrame:(CGRect)f{
+- (void) setFrame:(CGRect)f{
     BOOL changed = CGSizeEqualToSize(self.scrollView.contentSize, f.size);
     [super setFrame:f];
     if (changed) {
@@ -352,12 +351,12 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 }
 
 #pragma mark - ======================UIScrollViewDelegte=======================================
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     //    NSLog(@"The scrollView's content offset is %@", NSStringFromCGPoint(scrollView.contentOffset));
 }
 
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     //    NSLog(@"EndDecelerating content offset is %@", NSStringFromCGPoint(scrollView.contentOffset));
 }
@@ -379,7 +378,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     return YES;
 }
 
--(void)tapGestureUpdated:(UITapGestureRecognizer *)tapGesture
+- (void)tapGestureUpdated:(UITapGestureRecognizer *)tapGesture
 {
     
     switch (tapGesture.state) {
@@ -392,7 +391,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             [self performSelector:@selector(transformingGestureDidFinishWithGesture:) withObject:tapGesture afterDelay:0.2];
             
             //*********允许滚动操作********//
-            _scrollView.scrollEnabled = YES;
+            self.scrollView.scrollEnabled = YES;
             
             break;
         }
@@ -401,7 +400,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         {
             
             //*********禁止滚动操作********//
-            _scrollView.scrollEnabled = NO;
+            self.scrollView.scrollEnabled = NO;
             
             break;
         }
@@ -411,7 +410,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     }
 }
 
--(void)rotateGestureUpdated: (UIRotationGestureRecognizer *)rotateGesture
+- (void)rotateGestureUpdated: (UIRotationGestureRecognizer *)rotateGesture
 {
     switch (rotateGesture.state) {
         case UIGestureRecognizerStateEnded:
@@ -429,7 +428,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         {
             
             //*********禁止滚动操作********//
-            _scrollView.scrollEnabled = NO;
+            self.scrollView.scrollEnabled = NO;
             self.lastRotation = rotateGesture.rotation;
             
             break;
@@ -440,7 +439,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             
             //设置PAGridViewCell的旋转动画************//
             PAGridViewCell *cell = (PAGridViewCell *)rotateGesture.view;
-            [_scrollView bringSubviewToFront:cell];
+            [self.scrollView bringSubviewToFront:cell];
             
             self.lastRotation = rotateGesture.rotation;
             CGAffineTransform transform = cell.transform;
@@ -456,7 +455,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     
 }
 
--(void)pinchGestureUpdated:(UIPinchGestureRecognizer *)pinchGesture
+- (void)pinchGestureUpdated:(UIPinchGestureRecognizer *)pinchGesture
 {
     
     switch (pinchGesture.state) {
@@ -477,9 +476,9 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                 PAGridViewCell *cell = (PAGridViewCell *)pinchGesture.view;
                 [cell setHidden:YES];
                 
-                if ([_dataSource respondsToSelector:@selector(presentPhotoView:andPhotoArray:)]) {
+                if ([self.dataSource respondsToSelector:@selector(presentPhotoView:andPhotoArray:)]) {
                     
-                    [_dataSource presentPhotoView:cell andPhotoArray:self.cellArray];
+                    [self.dataSource presentPhotoView:cell andPhotoArray:self.cellArray];
                 }
                 
                 cell.transform = CGAffineTransformMakeScale(1, 1);
@@ -488,7 +487,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             }
             
             //*********允许滚动操作********//
-            _scrollView.scrollEnabled = YES;
+            self.scrollView.scrollEnabled = YES;
             
             break;
         }
@@ -496,7 +495,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         case UIGestureRecognizerStateBegan:
         {
             //*********禁止滚动操作********//
-            _scrollView.scrollEnabled = NO;
+            self.scrollView.scrollEnabled = NO;
             
             //*********更新lastScale和preScale的值*************//
             self.lastScale = pinchGesture.scale;
@@ -509,15 +508,15 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         {
             PAGridViewCell *cell = (PAGridViewCell *)pinchGesture.view;
             
-            [_scrollView bringSubviewToFront:cell];
+            [self.scrollView bringSubviewToFront:cell];
             
             self.lastScale = pinchGesture.scale;
             
             //**************取差值的绝对值*********************//
-            self.deltaScale = fabs(_lastScale - _preScale);
+            self.deltaScale = fabs(self.lastScale - self.preScale);
             
             //************进行缩小操作****************//
-            if (_preScale > _lastScale) {
+            if (self.preScale > self.lastScale) {
                 
                 //****************当进行缩小操作时，减少cell的白色边框的透明度*********//
                 [cell.layer setBorderColor:[UIColor colorWithWhite:1.0 alpha:1 - cell.frame.size.width/1000].CGColor];
@@ -533,13 +532,13 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             self.preScale = [pinchGesture scale];
             
             //***************处理cell的缩放和旋转动画****************//
-            cell.transform = CGAffineTransformMakeScale(_lastScale,_lastScale);
+            cell.transform = CGAffineTransformMakeScale(self.lastScale,self.lastScale);
             CGAffineTransform transform = cell.transform;
             transform = CGAffineTransformRotate(transform, self.lastRotation);
             cell.transform = transform;
             
             //*************进行背景变暗设置**********************//
-            //      [self controlBackgroundColorWithGesture:pinchGesture andView:_scrollView];
+            //      [self controlBackgroundColorWithGesture:pinchGesture andView:self.scrollView];
             
             break;
             
@@ -550,7 +549,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     
 }
 
--(void)panGestureUpdated:(UIPanGestureRecognizer *)panGesture
+- (void)panGestureUpdated:(UIPanGestureRecognizer *)panGesture
 {
     switch (panGesture.state) {
         case UIGestureRecognizerStateEnded:
@@ -561,7 +560,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             [self performSelector:@selector(transformingGestureDidFinishWithGesture:) withObject:panGesture afterDelay:0.2];
             
             //*********Enable scroll action********//
-            _scrollView.scrollEnabled = YES;
+            self.scrollView.scrollEnabled = YES;
             
             break;
         }
@@ -572,7 +571,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             self.lastPosition = CGPointMake(cell.center.x,cell.center.y);
             
             //*********Disable scroll action*********//
-            _scrollView.scrollEnabled = NO;
+            self.scrollView.scrollEnabled = NO;
             break;
         }
             
@@ -580,10 +579,10 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         {
             
             PAGridViewCell *cell = (PAGridViewCell *)panGesture.view;
-            [_scrollView bringSubviewToFront:cell];
-            CGPoint translate = [panGesture translationInView:_scrollView];
+            [self.scrollView bringSubviewToFront:cell];
+            CGPoint translate = [panGesture translationInView:self.scrollView];
             [cell setCenter:CGPointMake(cell.center.x + translate.x, cell.center.y + translate.y)];
-            [panGesture setTranslation:CGPointZero inView:_scrollView];
+            [panGesture setTranslation:CGPointZero inView:self.scrollView];
             break;
             
         }
@@ -594,7 +593,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     
 }
 
--(void)transformingGestureDidFinishWithGesture:(UIGestureRecognizer *)recognizer
+- (void)transformingGestureDidFinishWithGesture:(UIGestureRecognizer *)recognizer
 {
     if ([recognizer isKindOfClass:[UIRotationGestureRecognizer class]]) {
         
@@ -655,9 +654,9 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                                                   
                                                   PAGridViewCell *cell = (PAGridViewCell *)recognizer.view;
                                                   
-                                                  if ([_dataSource respondsToSelector:@selector(presentPhotoView:andPhotoArray:)]) {
+                                                  if ([self.dataSource respondsToSelector:@selector(presentPhotoView:andPhotoArray:)]) {
                                                       
-                                                      [_dataSource presentPhotoView:cell andPhotoArray:self.cellArray];
+                                                      [self.dataSource presentPhotoView:cell andPhotoArray:self.cellArray];
                                                   }
                                               }
                                               completion:nil

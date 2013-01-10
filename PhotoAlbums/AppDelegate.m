@@ -39,7 +39,7 @@
     UINavigationController *nav = [[[UINavigationController alloc]initWithRootViewController:self.rootViewController] autorelease];
     [nav.navigationBar setBarStyle:UIBarStyleBlack];
     self.window.rootViewController = nav;
-    [_window makeKeyAndVisible];
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

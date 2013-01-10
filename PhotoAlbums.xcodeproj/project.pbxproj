@@ -216,9 +216,9 @@
 				1A3868C615C00A2E004D9337 /* PhotoViewController.m */,
 				1A7D105715B5688000D4CA2F /* RootViewController.h */,
 				1A7D105815B5688000D4CA2F /* RootViewController.m */,
-				1A7ABE7C15B01790006AF14A /* AppDelegate.h */,
-				1A7ABE7D15B01790006AF14A /* AppDelegate.m */,
-				1A7E110915B3ADF800FB4D97 /* API */,
+				F36883CA169F0F0A00CA2765 /* Delegate */,
+				F36883CC169F0F1000CA2765 /* PAGridView */,
+				F36883CD169F0F1800CA2765 /* libs */,
 				1A7D105415B5683400D4CA2F /* Resources */,
 				1A7ABE7415B01790006AF14A /* Supporting Files */,
 			);
@@ -237,6 +237,61 @@
 			sourceTree = "<group>";
 		};
 		1A7D105415B5683400D4CA2F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F36883CF169F0FB000CA2765 /* Images */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		1ABDBA7B15C7EE4600C34E5B /* SWSnapshotStackView */ = {
+			isa = PBXGroup;
+			children = (
+				1ABDBA7D15C7EE5E00C34E5B /* SWSnapshotStackView.h */,
+				1ABDBA7E15C7EE5E00C34E5B /* SWSnapshotStackView.m */,
+			);
+			name = SWSnapshotStackView;
+			sourceTree = "<group>";
+		};
+		F36883CA169F0F0A00CA2765 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				1A7ABE7C15B01790006AF14A /* AppDelegate.h */,
+				1A7ABE7D15B01790006AF14A /* AppDelegate.m */,
+			);
+			name = Delegate;
+			sourceTree = "<group>";
+		};
+		F36883CC169F0F1000CA2765 /* PAGridView */ = {
+			isa = PBXGroup;
+			children = (
+				1A72FB5D15B7A087006CAC2F /* PAGridViewCell.h */,
+				1A72FB5E15B7A087006CAC2F /* PAGridViewCell.m */,
+				1A8BD02C15DDF52A00760901 /* PAGridView.h */,
+				1A8BD02D15DDF52A00760901 /* PAGridView.m */,
+			);
+			name = PAGridView;
+			sourceTree = "<group>";
+		};
+		F36883CD169F0F1800CA2765 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				F36883CE169F0F2700CA2765 /* ThumbnailPickerView */,
+				1ABDBA7B15C7EE4600C34E5B /* SWSnapshotStackView */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+		F36883CE169F0F2700CA2765 /* ThumbnailPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				1A904AE415C289AD00942B03 /* ThumbnailPickerView.h */,
+				1A904AE515C289AD00942B03 /* ThumbnailPickerView.m */,
+			);
+			name = ThumbnailPickerView;
+			sourceTree = "<group>";
+		};
+		F36883CF169F0FB000CA2765 /* Images */ = {
 			isa = PBXGroup;
 			children = (
 				1A904AE815C2A3E400942B03 /* image001.jpg */,
@@ -299,30 +354,7 @@
 				1A85CD2415D4FE410045CF69 /* image058.jpg */,
 				1A7D105515B5684A00D4CA2F /* close_x.png */,
 			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		1A7E110915B3ADF800FB4D97 /* API */ = {
-			isa = PBXGroup;
-			children = (
-				1ABDBA7B15C7EE4600C34E5B /* SWSnapshotStackView */,
-				1A72FB5D15B7A087006CAC2F /* PAGridViewCell.h */,
-				1A72FB5E15B7A087006CAC2F /* PAGridViewCell.m */,
-				1A904AE415C289AD00942B03 /* ThumbnailPickerView.h */,
-				1A8BD02C15DDF52A00760901 /* PAGridView.h */,
-				1A8BD02D15DDF52A00760901 /* PAGridView.m */,
-				1A904AE515C289AD00942B03 /* ThumbnailPickerView.m */,
-			);
-			name = API;
-			sourceTree = "<group>";
-		};
-		1ABDBA7B15C7EE4600C34E5B /* SWSnapshotStackView */ = {
-			isa = PBXGroup;
-			children = (
-				1ABDBA7D15C7EE5E00C34E5B /* SWSnapshotStackView.h */,
-				1ABDBA7E15C7EE5E00C34E5B /* SWSnapshotStackView.m */,
-			);
-			name = SWSnapshotStackView;
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
