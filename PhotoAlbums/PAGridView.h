@@ -50,9 +50,9 @@
 @property(nonatomic,readwrite)BOOL orientationIsPortrait;
 @property(nonatomic,readwrite)BOOL ifSnapShotMode;
 
--(void)reloadData;
+- (void)reloadData;
 -(CGSize)setScrollViewContentSizeWithWidth:(float)width andHeight:(float)height;
--(void) setUpCellViewFrame;
+- (void) setUpCellViewFrame;
 
 @end
 
@@ -66,6 +66,6 @@
 -(float)paddingForCell;
 -(PAGridViewCell *)PAGridView:(PAGridView *)gridView cellForItemAtIndex:(NSInteger)index;
 -(BOOL)updateOrientationState;
--(void)presentPhotoView:(PAGridViewCell *)cell andPhotoArray:(NSMutableArray *)array;
+- (void)presentPhotoView:(PAGridViewCell *)cell andPhotoArray:(NSMutableArray *)array;
 
 @end

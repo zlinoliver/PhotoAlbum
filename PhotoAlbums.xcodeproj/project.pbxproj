@@ -216,9 +216,9 @@
 				1A3868C615C00A2E004D9337 /* PhotoViewController.m */,
 				1A7D105715B5688000D4CA2F /* RootViewController.h */,
 				1A7D105815B5688000D4CA2F /* RootViewController.m */,
-				1A7ABE7C15B01790006AF14A /* AppDelegate.h */,
-				1A7ABE7D15B01790006AF14A /* AppDelegate.m */,
-				1A7E110915B3ADF800FB4D97 /* API */,
+				1AD6EB94169EEADA0036EC04 /* Delegate */,
+				1A7E110915B3ADF800FB4D97 /* PAGridView */,
+				1AD6EB95169EEAF20036EC04 /* libs */,
 				1A7D105415B5683400D4CA2F /* Resources */,
 				1A7ABE7415B01790006AF14A /* Supporting Files */,
 			);
@@ -302,18 +302,15 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		1A7E110915B3ADF800FB4D97 /* API */ = {
+		1A7E110915B3ADF800FB4D97 /* PAGridView */ = {
 			isa = PBXGroup;
 			children = (
-				1ABDBA7B15C7EE4600C34E5B /* SWSnapshotStackView */,
 				1A72FB5D15B7A087006CAC2F /* PAGridViewCell.h */,
 				1A72FB5E15B7A087006CAC2F /* PAGridViewCell.m */,
-				1A904AE415C289AD00942B03 /* ThumbnailPickerView.h */,
 				1A8BD02C15DDF52A00760901 /* PAGridView.h */,
 				1A8BD02D15DDF52A00760901 /* PAGridView.m */,
-				1A904AE515C289AD00942B03 /* ThumbnailPickerView.m */,
 			);
-			name = API;
+			name = PAGridView;
 			sourceTree = "<group>";
 		};
 		1ABDBA7B15C7EE4600C34E5B /* SWSnapshotStackView */ = {
@@ -323,6 +320,33 @@
 				1ABDBA7E15C7EE5E00C34E5B /* SWSnapshotStackView.m */,
 			);
 			name = SWSnapshotStackView;
+			sourceTree = "<group>";
+		};
+		1AD6EB94169EEADA0036EC04 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				1A7ABE7C15B01790006AF14A /* AppDelegate.h */,
+				1A7ABE7D15B01790006AF14A /* AppDelegate.m */,
+			);
+			name = Delegate;
+			sourceTree = "<group>";
+		};
+		1AD6EB95169EEAF20036EC04 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				1AD6EB96169EEB020036EC04 /* ThumbnailPickerView */,
+				1ABDBA7B15C7EE4600C34E5B /* SWSnapshotStackView */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+		1AD6EB96169EEB020036EC04 /* ThumbnailPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				1A904AE415C289AD00942B03 /* ThumbnailPickerView.h */,
+				1A904AE515C289AD00942B03 /* ThumbnailPickerView.m */,
+			);
+			name = ThumbnailPickerView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

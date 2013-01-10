@@ -14,7 +14,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 
 @interface PhotoViewController ()
 
--(void)transformingGestureDidFinishWithGesture:(UIGestureRecognizer *)recognizer;
+- (void)transformingGestureDidFinishWithGesture:(UIGestureRecognizer *)recognizer;
 
 @end
 
@@ -39,7 +39,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 
 
 #pragma mark - ======================Dealloc===============================
--(void)dealloc
+- (void)dealloc
 {
 
     if (_imageArray) {
@@ -63,6 +63,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     }
     
     if (_thumbnailPickerView) {
+        _thumbnailPickerView.delegate = nil;
         [_thumbnailPickerView release];
         _thumbnailPickerView = nil;
     }
@@ -79,44 +80,44 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 
 
 #pragma mark - ======================ClassMethods==========================
--(void)addGestureRecognizers
+- (void)addGestureRecognizers
 {
     //*************添加UIRotateGestreRecognizer*******************//
     UIRotationGestureRecognizer *rotateGesture = [[UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(rotateGestureUpdated:)];
     rotateGesture.delegate = self;
-    [_scrollView addGestureRecognizer:rotateGesture];
+    [self.scrollView addGestureRecognizer:rotateGesture];
     [rotateGesture release];
     
     UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(pinchGestureUpdated:)];
     pinchGesture.delegate = self;
-    [_scrollView addGestureRecognizer:pinchGesture];
+    [self.scrollView addGestureRecognizer:pinchGesture];
     [pinchGesture release];
     
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGestureUpdated:)];
     panGesture.delegate = self;
     [panGesture setMaximumNumberOfTouches:2];
     [panGesture setMinimumNumberOfTouches:2];
-    [_scrollView addGestureRecognizer:panGesture];
+    [self.scrollView addGestureRecognizer:panGesture];
     [panGesture release];
     
 }
 
 
--(void)updateContentViewSize
+- (void)updateContentViewSize
 {
     
-    self.totalPageNum = [_imageArray count];
+    self.totalPageNum = [self.imageArray count];
     
     //******************根据屏幕旋转方向，更新toolBar的frame***************//
-    if (_orientationIsPortrait) {
+    if (self.orientationIsPortrait) {
         
-        [_toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - 44, 768.0, 44)];
-        [_thumbnailPickerView setFrame:CGRectMake(0, 0, _toolBar.bounds.size.width, _toolBar.bounds.size.height)];
+        [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - 44, 768.0, 44)];
+        [self.thumbnailPickerView setFrame:CGRectMake(0, 0, self.toolBar.bounds.size.width, self.toolBar.bounds.size.height)];
         
     }else
     {
-        [_toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - 44, 1024.0, 44)];
-        [_thumbnailPickerView setFrame:CGRectMake(0, 0, _toolBar.bounds.size.width, _toolBar.bounds.size.height)];
+        [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - 44, 1024.0, 44)];
+        [self.thumbnailPickerView setFrame:CGRectMake(0, 0, self.toolBar.bounds.size.width, self.toolBar.bounds.size.height)];
         
     }
         
@@ -125,7 +126,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 - (BOOL)isDisplayingPageForIndex:(NSUInteger)index
 {
     BOOL foundPage = NO;
-    for (PAGridViewCell *cell in _visiblePages) {
+    for (PAGridViewCell *cell in self.visiblePages) {
         if (cell.cellID == index) {
             foundPage = YES;
             break;
@@ -137,11 +138,11 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 //****************重用PAGridViewCell**************//
 -(PAGridViewCell *)dequeueRecycledPage
 {
-    PAGridViewCell *cell = [_recycledPages anyObject];
+    PAGridViewCell *cell = [self.recycledPages anyObject];
     
     if (cell) {
         [[cell retain] autorelease];
-        [_recycledPages removeObject:cell];
+        [self.recycledPages removeObject:cell];
     }
     
     return cell;
@@ -156,7 +157,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 
 - (CGRect)frameForPageAtIndex:(NSUInteger)index {
     
-    CGRect bounds = _scrollView.bounds;
+    CGRect bounds = self.scrollView.bounds;
     CGRect pageFrame = bounds;
     pageFrame.size.width = bounds.size.width + 10;
     pageFrame.origin.x = bounds.size.width * index;
@@ -164,25 +165,25 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 }
 
 
--(void)tilePages
+- (void)tilePages
 {
     //***********计算哪页是当前显示页面******************//
-    CGRect visibleBounds = _scrollView.bounds;
+    CGRect visibleBounds = self.scrollView.bounds;
     int firstNeededPageIndex = floorf(CGRectGetMinX(visibleBounds) / CGRectGetWidth(visibleBounds));
     int lastNeededPageIndex  = floorf((CGRectGetMaxX(visibleBounds)-1) / CGRectGetWidth(visibleBounds));
     firstNeededPageIndex = MAX(firstNeededPageIndex, 0);
-    lastNeededPageIndex  = MIN(lastNeededPageIndex, _totalPageNum - 1);
+    lastNeededPageIndex  = MIN(lastNeededPageIndex, self.totalPageNum - 1);
     
     //**********重用非当前显示页面*****************//
-    for (PAGridViewCell *cell in _visiblePages) {
+    for (PAGridViewCell *cell in self.visiblePages) {
         
         if (cell.cellID < firstNeededPageIndex || cell.cellID > lastNeededPageIndex) {
-            [_recycledPages addObject:cell];
+            [self.recycledPages addObject:cell];
             [cell removeFromSuperview];
         }
     }
     
-    [_visiblePages minusSet:_recycledPages];
+    [self.visiblePages minusSet:self.recycledPages];
     
     //***************添加未显示页面*****************//
     for (int index = firstNeededPageIndex; index <= lastNeededPageIndex; index++) {
@@ -218,8 +219,8 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             [self configurePage:cell forIndex:index];
             [imageView release];
             
-            [_scrollView addSubview:cell];
-            [_visiblePages addObject:cell];
+            [self.scrollView addSubview:cell];
+            [self.visiblePages addObject:cell];
         }
         
     }
@@ -231,7 +232,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                     
     CGFloat pageWidth;
     
-    if (_orientationIsPortrait) {
+    if (self.orientationIsPortrait) {
 
         pageWidth = 768.0;
     }
@@ -239,7 +240,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         pageWidth = 1024.0;
     }
         
-    int page = floor((_scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    int page = floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
 
     //////////////Set CurrentPageNum///////////////////
     self.currentPageNum = page;
@@ -249,11 +250,11 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         
 }
 
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     //*************当结束滚动操作后，更新BigThumbnailPosition******************//
-    [_thumbnailPickerView setSelectedIndex:_currentPageNum];
-    [_thumbnailPickerView _updateBigThumbnailPositionVerbose:YES animated:NO];
+    [self.thumbnailPickerView setSelectedIndex:self.currentPageNum];
+    [self.thumbnailPickerView _updateBigThumbnailPositionVerbose:YES animated:NO];
 
 }
 
@@ -262,18 +263,19 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 
 - (NSUInteger)numberOfImagesForThumbnailPickerView:(ThumbnailPickerView *)thumbnailPickerView
 {
-    return [_imageArray count];
+    return [self.imageArray count];
 }
 
 - (UIImage *)thumbnailPickerView:(ThumbnailPickerView *)thumbnailPickerView imageAtIndex:(NSUInteger)index
 {
-    PAGridViewCell *cell;
+    UIImage *image = nil;
     
-    if ([_imageArray count] >= index) {
-        cell  = [_imageArray objectAtIndex:index];
+    if ([self.imageArray count] >= index) {
+       PAGridViewCell *cell  = (PAGridViewCell *)[self.imageArray objectAtIndex:index];
+        image = cell.image;
     }
     
-    return cell.image;
+    return image;
 }
 
 #pragma mark - ======================ThumbnailPickerView delegate======================
@@ -286,8 +288,8 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     ///////////////////更新当前可视页面的文章信息//////////////////////
     [self tilePages];
         
-    CGPoint offset = CGPointMake(_scrollView.frame.size.width *index, 0);
-    [_scrollView scrollRectToVisible:CGRectMake(offset.x, offset.y, _scrollView.frame.size.width, _scrollView.frame.size.height) animated:YES];
+    CGPoint offset = CGPointMake(self.scrollView.frame.size.width *index, 0);
+    [self.scrollView scrollRectToVisible:CGRectMake(offset.x, offset.y, self.scrollView.frame.size.width, self.scrollView.frame.size.height) animated:YES];
  
 }
 
@@ -305,19 +307,19 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 
 -(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    [_scrollView setScrollEnabled:NO];
+    [self.scrollView setScrollEnabled:NO];
     return YES;
 }
 
 
--(void)rotateGestureUpdated: (UIRotationGestureRecognizer *)rotateGesture
+- (void)rotateGestureUpdated: (UIRotationGestureRecognizer *)rotateGesture
 {
     switch (rotateGesture.state) {
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateFailed:
         {
-            [_scrollView setScrollEnabled:YES];
+            [self.scrollView setScrollEnabled:YES];
             
             [self performSelector:@selector(transformingGestureDidFinishWithGesture:) withObject:rotateGesture afterDelay:0.2];
             
@@ -337,9 +339,9 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             
             self.lastRotation = rotateGesture.rotation;
             
-            CGAffineTransform transform = _scrollView.transform;
+            CGAffineTransform transform = self.scrollView.transform;
             transform = CGAffineTransformRotate(transform, self.lastRotation);
-            _scrollView.transform = transform;
+            self.scrollView.transform = transform;
             break;
         }
             
@@ -349,20 +351,20 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     
 }
 
--(void)pinchGestureUpdated:(UIPinchGestureRecognizer *)pinchGesture
+- (void)pinchGestureUpdated:(UIPinchGestureRecognizer *)pinchGesture
 {
     switch (pinchGesture.state) {
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateFailed:
         {
-            [_scrollView setScrollEnabled:YES];
+            [self.scrollView setScrollEnabled:YES];
 
             const CGFloat kMaxScale = 3;
             const CGFloat kMinScale = 0.5;
             
             //*********************设置scrollView的边界颜色*************************//
-            [_scrollView.layer setBorderColor:[UIColor colorWithWhite:1.0 alpha:0].CGColor];
+            [self.scrollView.layer setBorderColor:[UIColor colorWithWhite:1.0 alpha:0].CGColor];
             
             if ([pinchGesture scale] >= kMinScale && [pinchGesture scale] <= kMaxScale) 
             { 
@@ -370,8 +372,8 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                 [self performSelector:@selector(transformingGestureDidFinishWithGesture:) withObject:pinchGesture afterDelay:0.2];
 
                 //***********************设置布尔值，判断PhotoView是否消失*************//
-                if ([_photoDelegate respondsToSelector:@selector(PhotoViewDisappear:)]) {
-                    [_photoDelegate PhotoViewDisappear:NO];
+                if ([self.photoDelegate respondsToSelector:@selector(PhotoViewDisappear:)]) {
+                    [self.photoDelegate PhotoViewDisappear:NO];
                 }
                 
             }else {
@@ -386,9 +388,9 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                                  animations:^{
                                      
                                      //***********************Pinch手势结束时，将选中的Cell图片使用动画复位***************************//
-                                     if ([_photoDelegate respondsToSelector:@selector(AnimateCellImageBackToNormalWithCell:WithPosition:)]) {
-                                         if ([_imageArray count] >= _currentPageNum) {
-                                            [_photoDelegate AnimateCellImageBackToNormalWithCell:[_imageArray objectAtIndex:_currentPageNum] WithPosition:_selectedCellOriginalPos];
+                                     if ([self.photoDelegate respondsToSelector:@selector(AnimateCellImageBackToNormalWithCell:WithPosition:)]) {
+                                         if ([self.imageArray count] >= self.currentPageNum) {
+                                            [self.photoDelegate AnimateCellImageBackToNormalWithCell:[self.imageArray objectAtIndex:self.currentPageNum] WithPosition:self.selectedCellOriginalPos];
                                          }
 
                                      }
@@ -405,22 +407,22 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         {
 
             //*********************设置scrollView的边界宽度和颜色*************************//
-            [_scrollView.layer setBorderWidth:15.0f];
-            [_scrollView.layer setBorderColor:[UIColor colorWithWhite:1.0 alpha:0].CGColor];
+            [self.scrollView.layer setBorderWidth:15.0f];
+            [self.scrollView.layer setBorderColor:[UIColor colorWithWhite:1.0 alpha:0].CGColor];
 
             //*********更新当前缩放数值*************//
             self.lastScale = pinchGesture.scale;
             self.preScale = pinchGesture.scale;
 
             //***********************设置布尔值，判断PhotoView是否消失*************//
-            if ([_photoDelegate respondsToSelector:@selector(PhotoViewDisappear:)]) {
-                [_photoDelegate PhotoViewDisappear:YES];
+            if ([self.photoDelegate respondsToSelector:@selector(PhotoViewDisappear:)]) {
+                [self.photoDelegate PhotoViewDisappear:YES];
             }
 
             //***************记录缩小的图片在图片集模式中的初始位置******************//
-            if ([_imageArray count] >= _currentPageNum) {
+            if ([self.imageArray count] >= self.currentPageNum) {
                 
-                self.selectedCellOriginalPos = [[_imageArray objectAtIndex:_currentPageNum] center];
+                self.selectedCellOriginalPos = [[self.imageArray objectAtIndex:self.currentPageNum] center];
 
             }
             
@@ -431,11 +433,11 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         {
             
             //***********************Pinch手势进行时，根据当前拖动位置，更新选中的Cell图片的位置***************************//
-            if ([_photoDelegate respondsToSelector:@selector(MoveCellImageWithCell:andPosition:)]) {
+            if ([self.photoDelegate respondsToSelector:@selector(MoveCellImageWithCell:andPosition:)]) {
                 
-                if ([_imageArray count] >= _currentPageNum) {
+                if ([self.imageArray count] >= self.currentPageNum) {
                     
-                    [_photoDelegate MoveCellImageWithCell:[_imageArray objectAtIndex:_currentPageNum] andPosition:_scrollView.center];                    
+                    [self.photoDelegate MoveCellImageWithCell:[self.imageArray objectAtIndex:self.currentPageNum] andPosition:self.scrollView.center];                    
                 }
                         
             }
@@ -443,32 +445,32 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             self.lastScale = [pinchGesture scale];
             
             //**************取差值的绝对值*********************//
-            self.deltaScale = fabs(_lastScale - _preScale);
+            self.deltaScale = fabs(self.lastScale - self.preScale);
             
             //************进行缩小操作****************//
-            if (_preScale > _lastScale) {
+            if (self.preScale > self.lastScale) {
                 
                 //****************当进行缩小操作时，减少cell的白色边框的透明度*********//
-                [_scrollView.layer setBorderColor:[UIColor colorWithWhite:1.0 alpha:1 - _scrollView.frame.size.width/1000].CGColor];
+                [self.scrollView.layer setBorderColor:[UIColor colorWithWhite:1.0 alpha:1 - self.scrollView.frame.size.width/1000].CGColor];
                 
                 //*********进行放大操作************//
             }else {
                 
                 //****************当进行放大操作时，增加cell的白色边框的透明度*********//
-                [_scrollView.layer setBorderColor:[UIColor colorWithWhite:1.0 alpha:1 - _scrollView.frame.size.width/1000].CGColor];
+                [self.scrollView.layer setBorderColor:[UIColor colorWithWhite:1.0 alpha:1 - self.scrollView.frame.size.width/1000].CGColor];
                 
             }
             
             self.preScale = [pinchGesture scale];
             
             //***************处理scrollView的缩放和旋转动画****************//
-            _scrollView.transform = CGAffineTransformMakeScale(_lastScale, _lastScale);
+            self.scrollView.transform = CGAffineTransformMakeScale(self.lastScale, self.lastScale);
             
-            CGAffineTransform transform = _scrollView.transform;
+            CGAffineTransform transform = self.scrollView.transform;
             transform = CGAffineTransformRotate(transform, self.lastRotation);
-            _scrollView.transform = transform;
+            self.scrollView.transform = transform;
             
-            _toolBar.alpha = _lastScale;
+            self.toolBar.alpha = self.lastScale;
             
             break;
             
@@ -479,7 +481,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 
 }
 
--(void)panGestureUpdated:(UIPanGestureRecognizer *)panGesture
+- (void)panGestureUpdated:(UIPanGestureRecognizer *)panGesture
 {
     switch (panGesture.state) {
         case UIGestureRecognizerStateEnded:
@@ -490,7 +492,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             [self performSelector:@selector(transformingGestureDidFinishWithGesture:) withObject:panGesture afterDelay:0.2];
             
             //******************允许滚动操作***********************//
-            [_scrollView setScrollEnabled:YES];
+            [self.scrollView setScrollEnabled:YES];
             
             break;
         }
@@ -498,7 +500,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         case UIGestureRecognizerStateBegan:
         {
 
-            self.lastPosition = CGPointMake(_scrollView.center.x,_scrollView.center.y);
+            self.lastPosition = CGPointMake(self.scrollView.center.x,self.scrollView.center.y);
             
             break;
         }
@@ -521,7 +523,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     
 }
 
--(void)transformingGestureDidFinishWithGesture:(UIGestureRecognizer *)recognizer
+- (void)transformingGestureDidFinishWithGesture:(UIGestureRecognizer *)recognizer
 {
     if ([recognizer isKindOfClass:[UIRotationGestureRecognizer class]]) {
         
@@ -531,7 +533,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                             options:kDefaultAnimationOptions
                          animations:^{
                              
-                             _scrollView.transform = CGAffineTransformMakeRotation(0);
+                             self.scrollView.transform = CGAffineTransformMakeRotation(0);
                              
                          }
                          completion:nil
@@ -546,7 +548,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                             options:kDefaultAnimationOptions
                          animations:^{
                              
-                             _scrollView.transform = CGAffineTransformMakeScale(1, 1);
+                             self.scrollView.transform = CGAffineTransformMakeScale(1, 1);
 
                          }
                          completion:nil
@@ -561,7 +563,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                             options:kDefaultAnimationOptions
                          animations:^{
                              
-                             _scrollView.center = CGPointMake(self.lastPosition.x, self.lastPosition.y);
+                             self.scrollView.center = CGPointMake(self.lastPosition.x, self.lastPosition.y);
                          
                          }
                          completion:nil
@@ -571,22 +573,22 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     
 }
 
--(void)willRotateToInterfaceOrientation:(NSNotification *)notification
+- (void)willRotateToInterfaceOrientation:(NSNotification *)notification
 {
     if ([[notification name] isEqualToString:@"RotatingDevice"]) {
                         
-        if (_orientationIsPortrait) {
+        if (self.orientationIsPortrait) {
             
         
             //******************根据设备的旋转方向，更新ToolBar和ThumbnailPickerView的frame**********************//
             [self.toolBar setFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width-256, 44)];
-            [_thumbnailPickerView setFrame:CGRectMake(0, 0, _toolBar.bounds.size.width, _toolBar.bounds.size.height)];
+            [self.thumbnailPickerView setFrame:CGRectMake(0, 0, self.toolBar.bounds.size.width, self.toolBar.bounds.size.height)];
             
         }else
         {
             //******************根据设备的旋转方向，更新ToolBar和ThumbnailPickerView的frame**********************//
             [self.toolBar setFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width+256, 44)];
-            [_thumbnailPickerView setFrame:CGRectMake(0, 0, _toolBar.bounds.size.width, _toolBar.bounds.size.height)];
+            [self.thumbnailPickerView setFrame:CGRectMake(0, 0, self.toolBar.bounds.size.width, self.toolBar.bounds.size.height)];
 
         }
         
@@ -607,35 +609,34 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         self.view.backgroundColor = [UIColor clearColor];
         
         //*****************初始化数组***************//
-        _recycledPages = [[NSMutableSet alloc]init];
-        _visiblePages = [[NSMutableSet alloc]init];
-        _imageArray = [[NSMutableArray alloc]init];
+        self.recycledPages = [[[NSMutableSet alloc]init] autorelease];
+        self.visiblePages = [[[NSMutableSet alloc]init] autorelease];
+        self.imageArray = [[[NSMutableArray alloc]init] autorelease];
         
         //***************初始化 ScrollView*******************//
-        _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height - 44)];
-        _scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height - 44);
-        _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        _scrollView.showsVerticalScrollIndicator = NO;
-        _scrollView.showsHorizontalScrollIndicator = NO;
-        _scrollView.scrollEnabled = YES;
-        _scrollView.pagingEnabled = YES;
-        _scrollView.scrollsToTop = NO;
-        _scrollView.delegate = self;
-        [_scrollView setUserInteractionEnabled:YES];
-        [_scrollView setCanCancelContentTouches:YES];
-        [self.view addSubview:_scrollView];
-        [_scrollView release];
+        self.scrollView = [[[UIScrollView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height - 44)] autorelease];
+        self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, self.scrollView.frame.size.height - 44);
+        self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.scrollView.showsVerticalScrollIndicator = NO;
+        self.scrollView.showsHorizontalScrollIndicator = NO;
+        self.scrollView.scrollEnabled = YES;
+        self.scrollView.pagingEnabled = YES;
+        self.scrollView.scrollsToTop = NO;
+        self.scrollView.delegate = self;
+        [self.scrollView setUserInteractionEnabled:YES];
+        [self.scrollView setCanCancelContentTouches:YES];
+        [self.view addSubview:self.scrollView];
         
         
         //***************初始化ToolBar*****************//
-        _toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 22, self.view.frame.size.width, 44)];
-        [_toolBar setBarStyle:UIBarStyleBlack];
-        [_toolBar setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin];
-        _thumbnailPickerView  = [[ThumbnailPickerView alloc]initWithFrame:CGRectMake(0, 0, _toolBar.bounds.size.width, _toolBar.bounds.size.height)];
-        _thumbnailPickerView.delegate = self;
-        _thumbnailPickerView.dataSource = self;
-        [_toolBar addSubview:_thumbnailPickerView];
-        [self.view addSubview:_toolBar];
+        self.toolBar = [[[UIToolbar alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 22, self.view.frame.size.width, 44)] autorelease];
+        [self.toolBar setBarStyle:UIBarStyleBlack];
+        [self.toolBar setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin];
+        self.thumbnailPickerView  = [[[ThumbnailPickerView alloc]initWithFrame:CGRectMake(0, 0, self.toolBar.bounds.size.width, self.toolBar.bounds.size.height)] autorelease];
+        self.thumbnailPickerView.delegate = self;
+        self.thumbnailPickerView.dataSource = self;
+        [self.toolBar addSubview:self.thumbnailPickerView];
+        [self.view addSubview:self.toolBar];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willRotateToInterfaceOrientation:) name:nil object:nil];
         
@@ -643,7 +644,6 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     
     return self;
 }
-
 
 - (void)viewDidLoad
 {
@@ -653,14 +653,13 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    _imageArray = nil;
-    _scrollView = nil;
-    _recycledPages = nil;
-    _visiblePages = nil;
-    _scrollView = nil;
-    _toolBar = nil;
+    self.imageArray = nil;
+    self.scrollView = nil;
+    self.recycledPages = nil;
+    self.visiblePages = nil;
+    self.scrollView = nil;
+    self.toolBar = nil;
 }
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
