@@ -59,7 +59,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
-
+    
     [super dealloc];
 }
 
@@ -251,13 +251,13 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     {
         t_row = i/self.pageCol +1;
     }
-
+    
     centerPoint.x = t_width * t_col - (t_width/2);
     centerPoint.y = t_height * t_row - (t_height/2);
-            
+    
     reRect.origin.x = centerPoint.x - t_width/2;
     reRect.origin.y = centerPoint.y - t_height/2;
-        
+
     reRect = CGRectInset(reRect, self.padding, self.padding);
     
     return reRect;
@@ -276,7 +276,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     {
         t_row = num/self.pageCol +1;
     }
-        
+    
     return t_row;
 }
 
@@ -297,7 +297,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 }
 
 - (void)setUpCellViewFrame{
-        
+
     PAGridViewCell* tCell;
     CGRect reRect;
     for (int i = 0,len = [self.cellArray count]; i<len; i++) {
