@@ -4,7 +4,7 @@
 //
 //  Created by zaker-7 zaker-7 on 12-7-24.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
-//
+//test2
 
 #import "PhotoViewController.h"
 #import <QuartzCore/QuartzCore.h>
