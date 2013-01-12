@@ -169,7 +169,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         
         CGSize size = [self setScrollViewContentSizeWithWidth:self.gridViewCellSize.width andHeight:(self.gridViewCellSize.height + self.padding)];
         [self.scrollView setContentSize:size];
-        
+
     }
     
     if ([self.dataSource respondsToSelector:@selector(PAGridView:cellForItemAtIndex:)]) {
@@ -222,7 +222,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     CGRect reRect=CGRectZero;
     
     reRect.size = CGSizeMake(self.gridViewCellSize.width, self.gridViewCellSize.height);
-    
+
     CGSize bSize = self.scrollView.contentSize;
     
     CGPoint centerPoint = CGPointZero;
@@ -257,7 +257,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     
     reRect.origin.x = centerPoint.x - t_width/2;
     reRect.origin.y = centerPoint.y - t_height/2;
-    
+
     reRect = CGRectInset(reRect, self.padding, self.padding);
     
     return reRect;
@@ -297,7 +297,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 }
 
 - (void)setUpCellViewFrame{
-    
+
     PAGridViewCell* tCell;
     CGRect reRect;
     for (int i = 0,len = [self.cellArray count]; i<len; i++) {
@@ -322,7 +322,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 {
     float sizeWidth = self.pageCol * width;
     float sizeHeight = self.pageRow * height;
-    
+
     return CGSizeMake(sizeWidth, sizeHeight);
 }
 

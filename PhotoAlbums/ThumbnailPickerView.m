@@ -210,7 +210,7 @@ static const NSUInteger kBigThumbnailTagOffset = 1000;
         self.contentView.frame = contentViewFrame;
     }
     
-    UIImageView *imageView = [[UIImageView alloc] init];
+    UIImageView *imageView = [[[UIImageView alloc] init] autorelease];
     CGRect imageViewFrame;
     NSUInteger index;
     NSInteger tag;

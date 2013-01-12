@@ -57,7 +57,7 @@
 /**
    添加手势识别
  */
--(void)addGestureRecognizers;
+- (void)addGestureRecognizers;
 
 
 /**
@@ -68,7 +68,7 @@
 /**
  更新scrollView的图片数据
  */
--(void)tilePages;
+- (void)tilePages;
 
 /**
  判断是否为当前显示页面
@@ -87,14 +87,14 @@
  */
 - (CGRect)frameForPageAtIndex:(NSUInteger)index;
 
--(void)updateContentViewSize;
+- (void)updateContentViewSize;
 
 @end
 
 @protocol PhotoViewDelegate <NSObject>
--(void)PhotoViewDisappear:(BOOL)value;
--(void)AnimateCellImageBackToNormalWithCell:(PAGridViewCell *)cell WithPosition:(CGPoint)point;
--(void)MoveCellImageWithCell:(PAGridViewCell *)cell andPosition:(CGPoint)point;
+- (void)PhotoViewDisappear:(BOOL)value;
+- (void)AnimateCellImageBackToNormalWithCell:(PAGridViewCell *)cell WithPosition:(CGPoint)point;
+- (void)MoveCellImageWithCell:(PAGridViewCell *)cell andPosition:(CGPoint)point;
 
 @end
 

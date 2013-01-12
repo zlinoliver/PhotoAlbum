@@ -18,7 +18,7 @@
 @synthesize lastDistance = _lastDistance;
 @synthesize deltaDistance = _deltaDistance;
 
--(void)dealloc
+- (void)dealloc
 {
     [super dealloc];
 }

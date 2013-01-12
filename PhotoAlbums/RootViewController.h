@@ -38,9 +38,9 @@
 @property (nonatomic,readwrite)float preScale;
 @property (nonatomic,readwrite)float lastScale;
 
--(void)transformingGestureDidFinishWithGesture:(UIGestureRecognizer *)recognizer;
--(void)addGestureRecognizersWithView:(UIView *)view;
--(void)reloadDataBaseOnOrientationMode;
+- (void)transformingGestureDidFinishWithGesture:(UIGestureRecognizer *)recognizer;
+- (void)addGestureRecognizersWithView:(UIView *)view;
+- (void)reloadDataBaseOnOrientationMode;
 -(float)getFingureDistanceWithLocation1:(CGPoint)location1 andLocation2:(CGPoint)location2;
 
 @end

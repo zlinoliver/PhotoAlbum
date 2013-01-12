@@ -233,15 +233,15 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     CGFloat pageWidth;
     
     if (self.orientationIsPortrait) {
-        
+
         pageWidth = 768.0;
     }
     else{
         pageWidth = 1024.0;
     }
-    
+        
     int page = floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-    
+        
     //////////////Set CurrentPageNum///////////////////
     self.currentPageNum = page;
     
@@ -255,7 +255,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     //*************当结束滚动操作后，更新BigThumbnailPosition******************//
     [self.thumbnailPickerView setSelectedIndex:self.currentPageNum];
     [self.thumbnailPickerView _updateBigThumbnailPositionVerbose:YES animated:NO];
-    
+
 }
 
 
@@ -271,7 +271,9 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     UIImage *image = nil;
     
     if ([self.imageArray count] >= index) {
+
         PAGridViewCell *cell  = (PAGridViewCell *)[self.imageArray objectAtIndex:index];
+
         image = cell.image;
     }
     
@@ -290,7 +292,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     
     CGPoint offset = CGPointMake(self.scrollView.frame.size.width *index, 0);
     [self.scrollView scrollRectToVisible:CGRectMake(offset.x, offset.y, self.scrollView.frame.size.width, self.scrollView.frame.size.height) animated:YES];
-    
+
 }
 
 
@@ -359,7 +361,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         case UIGestureRecognizerStateFailed:
         {
             [self.scrollView setScrollEnabled:YES];
-            
+
             const CGFloat kMaxScale = 3;
             const CGFloat kMinScale = 0.5;
             
@@ -390,7 +392,9 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                                      //***********************Pinch手势结束时，将选中的Cell图片使用动画复位***************************//
                                      if ([self.photoDelegate respondsToSelector:@selector(AnimateCellImageBackToNormalWithCell:WithPosition:)]) {
                                          if ([self.imageArray count] >= self.currentPageNum) {
+
                                              [self.photoDelegate AnimateCellImageBackToNormalWithCell:[self.imageArray objectAtIndex:self.currentPageNum] WithPosition:self.selectedCellOriginalPos];
+
                                          }
                                          
                                      }
@@ -409,7 +413,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             //*********************设置scrollView的边界宽度和颜色*************************//
             [self.scrollView.layer setBorderWidth:15.0f];
             [self.scrollView.layer setBorderColor:[UIColor colorWithWhite:1.0 alpha:0].CGColor];
-            
+
             //*********更新当前缩放数值*************//
             self.lastScale = pinchGesture.scale;
             self.preScale = pinchGesture.scale;
@@ -423,7 +427,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             if ([self.imageArray count] >= self.currentPageNum) {
                 
                 self.selectedCellOriginalPos = [[self.imageArray objectAtIndex:self.currentPageNum] center];
-                
+
             }
             
             break;
@@ -437,7 +441,8 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                 
                 if ([self.imageArray count] >= self.currentPageNum) {
                     
-                    [self.photoDelegate MoveCellImageWithCell:[self.imageArray objectAtIndex:self.currentPageNum] andPosition:self.scrollView.center];
+                    [self.photoDelegate MoveCellImageWithCell:[self.imageArray objectAtIndex:self.currentPageNum] andPosition:self.scrollView.center];                    
+
                 }
                 
             }
@@ -499,7 +504,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             
         case UIGestureRecognizerStateBegan:
         {
-            
+
             self.lastPosition = CGPointMake(self.scrollView.center.x,self.scrollView.center.y);
             
             break;
@@ -549,7 +554,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                          animations:^{
                              
                              self.scrollView.transform = CGAffineTransformMakeScale(1, 1);
-                             
+
                          }
                          completion:nil
          ];
@@ -564,7 +569,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                          animations:^{
                              
                              self.scrollView.center = CGPointMake(self.lastPosition.x, self.lastPosition.y);
-                             
+
                          }
                          completion:nil
          ];
@@ -589,7 +594,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             //******************根据设备的旋转方向，更新ToolBar和ThumbnailPickerView的frame**********************//
             [self.toolBar setFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width+256, 44)];
             [self.thumbnailPickerView setFrame:CGRectMake(0, 0, self.toolBar.bounds.size.width, self.toolBar.bounds.size.height)];
-            
+
         }
         
         
