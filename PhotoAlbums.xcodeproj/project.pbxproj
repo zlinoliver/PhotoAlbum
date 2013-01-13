@@ -79,6 +79,7 @@
 		1A904B2615C2A47D00942B03 /* image029.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1A904B2415C2A47D00942B03 /* image029.jpg */; };
 		1A904B2715C2A47D00942B03 /* image030.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1A904B2515C2A47D00942B03 /* image030.jpg */; };
 		1ABDBA7F15C7EE5E00C34E5B /* SWSnapshotStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABDBA7E15C7EE5E00C34E5B /* SWSnapshotStackView.m */; };
+		F39C8CC816A12C65001EA623 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F39C8CC716A12C65001EA623 /* icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -164,6 +165,7 @@
 		1A904B2515C2A47D00942B03 /* image030.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image030.jpg; sourceTree = "<group>"; };
 		1ABDBA7D15C7EE5E00C34E5B /* SWSnapshotStackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWSnapshotStackView.h; sourceTree = "<group>"; };
 		1ABDBA7E15C7EE5E00C34E5B /* SWSnapshotStackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWSnapshotStackView.m; sourceTree = "<group>"; };
+		F39C8CC716A12C65001EA623 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,7 @@
 		1A7ABE5E15B01790006AF14A = {
 			isa = PBXGroup;
 			children = (
+				F39C8CC716A12C65001EA623 /* icon.png */,
 				1A7ABE7315B01790006AF14A /* PhotoAlbums */,
 				1A7ABE6C15B01790006AF14A /* Frameworks */,
 				1A7ABE6A15B01790006AF14A /* Products */,
@@ -244,13 +247,13 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		1ABDBA7B15C7EE4600C34E5B /* SWSnapshotStackView */ = {
+		1ABDBA7B15C7EE4600C34E5B /* Images */ = {
 			isa = PBXGroup;
 			children = (
 				1ABDBA7D15C7EE5E00C34E5B /* SWSnapshotStackView.h */,
 				1ABDBA7E15C7EE5E00C34E5B /* SWSnapshotStackView.m */,
 			);
-			name = SWSnapshotStackView;
+			name = Images;
 			sourceTree = "<group>";
 		};
 		F36883CA169F0F0A00CA2765 /* Delegate */ = {
@@ -277,7 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				F36883CE169F0F2700CA2765 /* ThumbnailPickerView */,
-				1ABDBA7B15C7EE4600C34E5B /* SWSnapshotStackView */,
+				1ABDBA7B15C7EE4600C34E5B /* Images */,
 			);
 			name = libs;
 			sourceTree = "<group>";
@@ -354,55 +357,7 @@
 				1A85CD2415D4FE410045CF69 /* image058.jpg */,
 				1A7D105515B5684A00D4CA2F /* close_x.png */,
 			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		1A7E110915B3ADF800FB4D97 /* PAGridView */ = {
-			isa = PBXGroup;
-			children = (
-				1A72FB5D15B7A087006CAC2F /* PAGridViewCell.h */,
-				1A72FB5E15B7A087006CAC2F /* PAGridViewCell.m */,
-				1A8BD02C15DDF52A00760901 /* PAGridView.h */,
-				1A8BD02D15DDF52A00760901 /* PAGridView.m */,
-			);
-			name = PAGridView;
-			sourceTree = "<group>";
-		};
-		1ABDBA7B15C7EE4600C34E5B /* SWSnapshotStackView */ = {
-			isa = PBXGroup;
-			children = (
-				1ABDBA7D15C7EE5E00C34E5B /* SWSnapshotStackView.h */,
-				1ABDBA7E15C7EE5E00C34E5B /* SWSnapshotStackView.m */,
-			);
-			name = SWSnapshotStackView;
 			name = Images;
-			sourceTree = "<group>";
-		};
-		1AD6EB94169EEADA0036EC04 /* Delegate */ = {
-			isa = PBXGroup;
-			children = (
-				1A7ABE7C15B01790006AF14A /* AppDelegate.h */,
-				1A7ABE7D15B01790006AF14A /* AppDelegate.m */,
-			);
-			name = Delegate;
-			sourceTree = "<group>";
-		};
-		1AD6EB95169EEAF20036EC04 /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				1AD6EB96169EEB020036EC04 /* ThumbnailPickerView */,
-				1ABDBA7B15C7EE4600C34E5B /* SWSnapshotStackView */,
-			);
-			name = libs;
-			sourceTree = "<group>";
-		};
-		1AD6EB96169EEB020036EC04 /* ThumbnailPickerView */ = {
-			isa = PBXGroup;
-			children = (
-				1A904AE415C289AD00942B03 /* ThumbnailPickerView.h */,
-				1A904AE515C289AD00942B03 /* ThumbnailPickerView.m */,
-			);
-			name = ThumbnailPickerView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -515,6 +470,7 @@
 				1A85CD3E15D4FE410045CF69 /* image056.jpg in Resources */,
 				1A85CD3F15D4FE410045CF69 /* image057.jpg in Resources */,
 				1A85CD4015D4FE410045CF69 /* image058.jpg in Resources */,
+				F39C8CC816A12C65001EA623 /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

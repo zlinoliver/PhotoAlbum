@@ -654,7 +654,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
          ];
         
     }
-    
+
 }
 
 #pragma mark - ======================InheritMethods========================
@@ -662,7 +662,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 {
     if ((self = [super init]))
     {
-        self.title = @"Demo";
+        self.title = @"PhotoAlbums";
         
         //************Initialize StatusBar Orientation*******************//
         [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight];

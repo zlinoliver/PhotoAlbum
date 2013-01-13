@@ -138,9 +138,12 @@ static const NSUInteger kBigThumbnailTagOffset = 1000;
     if (imageView) {
         [self.reusableThumbnailImageViews removeObject:imageView];
         //        NSLog(@"found reusable image view!");
+        return imageView;
+    }else
+    {
+        return nil;
     }
     
-    return imageView;
 }
 
 - (void)_prepareImageViewForReuse:(UIImageView *)imageView
@@ -192,7 +195,7 @@ static const NSUInteger kBigThumbnailTagOffset = 1000;
     }
     
     if (!self.contentView) {
-        _contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, contentsWidth, kThumbnailSize.height)];
+        self.contentView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, contentsWidth, kThumbnailSize.height)] autorelease];
         self.contentView.userInteractionEnabled = NO;
         self.contentView.backgroundColor = [UIColor clearColor];
         [self addSubview:self.contentView];
@@ -210,7 +213,7 @@ static const NSUInteger kBigThumbnailTagOffset = 1000;
         self.contentView.frame = contentViewFrame;
     }
     
-    UIImageView *imageView = [[[UIImageView alloc] init] autorelease];
+    UIImageView *imageView = nil;
     CGRect imageViewFrame;
     NSUInteger index;
     NSInteger tag;
@@ -221,12 +224,23 @@ static const NSUInteger kBigThumbnailTagOffset = 1000;
         
         imageView = (UIImageView *)[self.contentView viewWithTag:tag];
         if (!imageView) {
+            
             imageView = [self _dequeueReusableImageView];
-            if (!imageView) {
-                imageView = [self _createThumbnailImageViewWithSize:kThumbnailSize];
+            if (imageView) {
+                imageView.tag = tag;
             }
-            imageView.tag = tag;
+            
         }
+        
+        if (!imageView) {
+            
+            imageView = [self _createThumbnailImageViewWithSize:kThumbnailSize];
+            if (imageView) {
+                imageView.tag = tag;
+            }
+
+        }
+        
         // [imageView setContentMode:UIViewContentModeScaleAspectFill];
         
         imageViewFrame = imageView.frame;
@@ -254,7 +268,9 @@ static const NSUInteger kBigThumbnailTagOffset = 1000;
             });
         });
         dispatch_release(imageLoadingQueue);
+        
     }
+    
     [self _updateBigThumbnailPositionVerbose:NO animated:NO];
 }
 
