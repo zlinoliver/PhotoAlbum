@@ -662,7 +662,6 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                                               completion:nil
                               ];
                              
-                             
                          }
                          completion:nil
          ];

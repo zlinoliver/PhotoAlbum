@@ -401,10 +401,15 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                                      }
                                      
                                  }
+                 
                                  completion:nil
+                 
                  ];
+                
             }
             
+            self.thumbnailPickerView.userInteractionEnabled = YES;
+
             break;
         }
             
@@ -430,6 +435,8 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                 self.selectedCellOriginalPos = [[self.imageArray objectAtIndex:self.currentPageNum] center];
 
             }
+            
+            self.thumbnailPickerView.userInteractionEnabled = NO;
             
             break;
         }
@@ -555,7 +562,9 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                          animations:^{
                              
                              self.scrollView.transform = CGAffineTransformMakeScale(1, 1);
-
+                             
+                             //恢复toolBar的alpha值
+                             self.toolBar.alpha = 1;
                          }
                          completion:nil
          ];
@@ -581,6 +590,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 
 - (void)willRotateToInterfaceOrientation:(NSNotification *)notification
 {
+        
     if ([[notification name] isEqualToString:@"RotatingDevice"]) {
         
         if (self.orientationIsPortrait) {
@@ -632,8 +642,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         [self.scrollView setUserInteractionEnabled:YES];
         [self.scrollView setCanCancelContentTouches:YES];
         [self.view addSubview:self.scrollView];
-        
-        
+    
         //***************初始化ToolBar*****************//
         self.toolBar = [[[UIToolbar alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 22, self.view.frame.size.width, 44)] autorelease];
         [self.toolBar setBarStyle:UIBarStyleBlack];

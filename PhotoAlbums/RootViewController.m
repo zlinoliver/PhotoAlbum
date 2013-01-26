@@ -151,6 +151,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 
 - (void)reloadDataBaseOnOrientationMode
 {
+    
     //*******************根据设备旋转方向，更新OrientationIsPortrait布尔值***************//
     if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeLeft){
         

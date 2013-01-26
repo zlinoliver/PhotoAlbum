@@ -136,13 +136,10 @@ static const NSUInteger kBigThumbnailTagOffset = 1000;
     UIImageView *imageView = [self.reusableThumbnailImageViews anyObject];
     
     if (imageView) {
+        imageView = [[imageView retain] autorelease];
         [self.reusableThumbnailImageViews removeObject:imageView];
-        //        NSLog(@"found reusable image view!");
-        return imageView;
-    }else
-    {
-        return nil;
     }
+    return imageView;
     
 }
 
@@ -238,7 +235,6 @@ static const NSUInteger kBigThumbnailTagOffset = 1000;
             if (imageView) {
                 imageView.tag = tag;
             }
-
         }
         
         // [imageView setContentMode:UIViewContentModeScaleAspectFill];

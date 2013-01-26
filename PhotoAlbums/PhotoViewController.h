@@ -59,7 +59,6 @@
  */
 - (void)addGestureRecognizers;
 
-
 /**
  返回重用的UIImageView
  */
