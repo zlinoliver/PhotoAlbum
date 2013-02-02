@@ -37,6 +37,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 @synthesize thumbnailPickerView = _thumbnailPickerView;
 @synthesize toolBar = _toolBar;
 @synthesize currentIndex = _currentIndex;
+@synthesize shadowView = _shadowView;
 
 
 #pragma mark - ======================Dealloc===============================
@@ -51,6 +52,11 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     if (_scrollView) {
         [_scrollView release];
         _scrollView = nil;
+    }
+    
+    if (_shadowView) {
+        [_shadowView release];
+        _shadowView = nil;
     }
     
     if (_recycledPages) {
@@ -409,6 +415,8 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             }
             
             self.thumbnailPickerView.userInteractionEnabled = YES;
+            
+            self.shadowView.alpha = 1;
 
             break;
         }
@@ -456,9 +464,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             }
             
             self.lastScale = [pinchGesture scale];
-            
-            //**************取差值的绝对值*********************//
-            self.deltaScale = fabs(self.lastScale - self.preScale);
+
             
             //************进行缩小操作****************//
             if (self.preScale > self.lastScale) {
@@ -484,6 +490,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             self.scrollView.transform = transform;
             
             self.toolBar.alpha = self.lastScale;
+            self.shadowView.alpha = self.lastScale;
             
             break;
             
@@ -565,6 +572,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                              
                              //恢复toolBar的alpha值
                              self.toolBar.alpha = 1;
+
                          }
                          completion:nil
          ];
@@ -614,7 +622,6 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 }
 
 
-
 #pragma mark - ======================InheritMethods========================
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -628,6 +635,12 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         self.recycledPages = [[[NSMutableSet alloc]init] autorelease];
         self.visiblePages = [[[NSMutableSet alloc]init] autorelease];
         self.imageArray = [[[NSMutableArray alloc]init] autorelease];
+        
+        //***************初始化 shadowView*******************//
+        self.shadowView = [[[UIView alloc]initWithFrame:self.view.frame] autorelease];
+        self.shadowView.backgroundColor = [UIColor blackColor];
+        self.shadowView.alpha = 1;
+        [self.view addSubview:self.shadowView];
         
         //***************初始化 ScrollView*******************//
         self.scrollView = [[[UIScrollView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height - 44)] autorelease];
@@ -660,6 +673,11 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -667,13 +685,16 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 
 - (void)viewDidUnload
 {
-    [super viewDidUnload];
     self.imageArray = nil;
     self.scrollView = nil;
     self.recycledPages = nil;
     self.visiblePages = nil;
     self.scrollView = nil;
     self.toolBar = nil;
+    self.shadowView = nil;
+    
+    [super viewDidUnload];
+
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

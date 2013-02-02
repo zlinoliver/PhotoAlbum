@@ -23,6 +23,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 -(NSInteger)getCurrentColumnWithTagNum:(NSInteger)num;
 - (void)receivedMemoryWarningNotification:(NSNotification *)notification;
 - (void)setUpSingleCellViewFrame;
+- (void)initializeScrollView;
 
 @end
 
@@ -102,7 +103,6 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 //*******************为PAGridViewCell添加旋转，捏合，移动和点击的手势识别****************//
 - (void)addGestureRecognizersWithCell:(PAGridViewCell *)cell
 {
-    
     //*************添加UIRotateGestreRecognizer*******************//
     UIRotationGestureRecognizer *rotateGesture = [[UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(rotateGestureUpdated:)];
     rotateGesture.delegate = self;
@@ -128,7 +128,6 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     [t_tapGesture requireGestureRecognizerToFail:panGesture];
     [cell addGestureRecognizer:t_tapGesture];
     [t_tapGesture release];
-    
 }
 
 //************************调用Delegate方法，刷新数据******************************//
@@ -465,7 +464,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         {
             const CGFloat kMaxScale = 3;
             const CGFloat kMinScale = 0.5;
-            
+                        
             if ([pinchGesture scale] >= kMinScale && [pinchGesture scale] <= kMaxScale)
             {
                 
@@ -488,7 +487,6 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             
             //*********允许滚动操作********//
             self.scrollView.scrollEnabled = YES;
-            
             break;
         }
             
@@ -530,6 +528,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             }
             
             self.preScale = [pinchGesture scale];
+        
             
             //***************处理cell的缩放和旋转动画****************//
             cell.transform = CGAffineTransformMakeScale(self.lastScale,self.lastScale);
@@ -671,6 +670,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 }
 
 #pragma mark - ======================InheritMethods========================
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

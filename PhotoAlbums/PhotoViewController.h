@@ -31,6 +31,7 @@
     CGPoint _selectedCellOriginalPos;
     
     UIScrollView *_scrollView;
+    UIView *shadowView;
     ThumbnailPickerView *_thumbnailPickerView;
     UIToolbar *_toolBar;
     
@@ -39,6 +40,7 @@
 @property(nonatomic,assign)id<PhotoViewDelegate>photoDelegate;
 @property(nonatomic,retain)ThumbnailPickerView *thumbnailPickerView;
 @property(nonatomic,retain)UIScrollView *scrollView;
+@property(nonatomic,retain)UIView *shadowView;
 @property(nonatomic,retain)NSMutableArray *imageArray;
 @property(nonatomic,readwrite)BOOL orientationIsPortrait;
 @property(nonatomic,readwrite)CGFloat lastScale;
