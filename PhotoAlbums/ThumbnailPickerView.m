@@ -148,8 +148,6 @@ static const NSUInteger kBigThumbnailTagOffset = 1000;
     if (imageView.tag != 0) {
         imageView.image = nil;
         imageView.tag = 0;
-        NSLog(@"The imageView is %@", imageView);
-        NSLog(@"ResuableThumbnailImageViews count is %d", [_reusableThumbnailImageViews count]);
         
         [self.reusableThumbnailImageViews addObject:imageView];
         [imageView removeFromSuperview];
