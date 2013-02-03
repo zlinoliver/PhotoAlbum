@@ -176,7 +176,6 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         [self shouldAutorotateToInterfaceOrientation:UIInterfaceOrientationPortraitUpsideDown];
         self.orientationIsPortrait = YES;
         self.photoViewController.orientationIsPortrait = YES;
-
     }
     
     //*************初始化PAGridView的数据****************//
@@ -320,6 +319,8 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     self.photoViewController.toolBar.alpha = 1.0;
     
     [self.photoViewController.view setFrame:self.view.frame];
+    [self.photoViewController.shadowView setFrame:self.view.frame]; //设定shadowView的frame
+    
     self.photoViewController.scrollView.contentSize = CGSizeMake(self.photoViewController.scrollView.frame.size.width * [array count], self.photoViewController.scrollView.frame.size.height-44);
     
     //***********根据选取的小图片初始化scrollView的contentView内容*************//

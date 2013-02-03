@@ -294,7 +294,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     //////////////设置 CurrentPageNum///////////////////
     self.currentPageNum = index;
     
-    ///////////////////更新当前可视页面的文章信息//////////////////////
+    ///////////////////更新当前可视页面的图片信息//////////////////////
     [self tilePages];
     
     CGPoint offset = CGPointMake(self.scrollView.frame.size.width *index, 0);
