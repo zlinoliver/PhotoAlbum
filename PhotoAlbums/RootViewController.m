@@ -364,7 +364,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 }
 
 - (void)MoveCellImageWithCell:(PAGridViewCell *)cell andPosition:(CGPoint)point{
-
+    
     //*************根据拖动图片的位置数据，更新Cell的位置*********//
     [cell setHidden:YES];
     [cell setCenter:point];

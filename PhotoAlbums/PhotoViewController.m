@@ -219,6 +219,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                 cell.cellID = index;
                 [cell setImage:imageView.image];
                 [cell setAutoresizingMask: UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+                [cell setContentMode:UIViewContentModeScaleAspectFit];
                 [self addGestureRecognizers];
                 
             }
@@ -490,6 +491,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             self.scrollView.transform = transform;
             
             self.toolBar.alpha = self.lastScale;
+                        
             self.shadowView.alpha = self.lastScale;
             
             break;
