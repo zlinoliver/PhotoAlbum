@@ -2,12 +2,13 @@
 //  AppDelegate.m
 //  PhotoAlbums
 //
-//  Created by zaker-7 zaker-7 on 12-7-13.
+//  Created by Oliver Oliver on 12-7-13.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
 #import "AppDelegate.h"
 #import "RootViewController.h"
+#import "TestFlight.h"
 
 @implementation AppDelegate
 
@@ -40,6 +41,9 @@
     [nav.navigationBar setBarStyle:UIBarStyleBlack];
     self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
+    
+    [TestFlight takeOff:@"384d36762e8faa787d39abb0e210e799_MTYxMTUyMjAxMi0xMS0yOSAyMzo1MDoxOC45NjA4Njg"];
+    
     return YES;
 }
 

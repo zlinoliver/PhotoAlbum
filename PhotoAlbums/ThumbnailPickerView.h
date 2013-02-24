@@ -2,7 +2,7 @@
 //  ThumbnailPickerView.h
 //  PhotoAlbums
 //
-//  Created by zaker-7 zaker-7 on 12-7-27.
+//  Created by Oliver Oliver on 12-7-27.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 

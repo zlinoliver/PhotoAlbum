@@ -2,12 +2,14 @@
 //  PAGridView.m
 //  PhotoAlbums
 //
-//  Created by zaker-7 on 12-8-17.
+//  Created by Oliver on 12-8-17.
 //
 //
 
 #import "PAGridView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "TestFlight.h"
+
 #define TotalColumnHR 7
 #define TotalColumnVR 5
 
@@ -304,7 +306,9 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         tCell = [self.cellArray objectAtIndex:i];
         reRect = [self makeFrameFromIndex:i+1];
         tCell.frame = reRect;
+        
     }
+    
 }
 
 - (void)setUpSingleCellViewFrame {
@@ -326,7 +330,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 }
 
 - (void) layoutSubviews{
-    
+        
     if (self.ifSnapShotMode) {
         
         [self setUpSingleCellViewFrame];
@@ -656,6 +660,10 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                                                   if ([self.dataSource respondsToSelector:@selector(presentPhotoView:andPhotoArray:)]) {
                                                       
                                                       [self.dataSource presentPhotoView:cell andPhotoArray:self.cellArray];
+                                                      
+                                                      [TestFlight passCheckpoint:@"OpenSingleImageCell"];
+                                                      
+                                                      TFLog(@"The currentImageCell's frame is %@",NSStringFromCGRect(cell.frame));
                                                   }
                                               }
                                               completion:nil
